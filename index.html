@@ -1,0 +1,38 @@
+<!--
+	作者：offline
+	时间：2018-10-08
+	描述：
+-->
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>例一</title>
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+	</head>
+	<body>
+		<p>分享你关于外星人的故事</p>
+		<form method="post" action="test.php">
+			<label for="name">名字：</label>
+			<input type="text" id="name" name="name" /><br/>
+			<label for="email">你的邮箱地址：</label>
+			<input type="text" id="email" name="email" /><br/>
+			<label for="whenithappened">发生在什么时候：</label>
+			<input type="text" id="whenithappened" name="whenithappened" /><br/>
+			
+			<label for="howlong">时间过了多久？</label>
+			<input type="text" id="howlong" name="howlong" /><br/>
+			<label for="aliendescription">描述一下他们：</label>
+			<input type="text" id="aliendescription" name="aliendescription" size="32"/><br/>
+			<label for="whattheydid">他们对你做了什么？</label>
+			<input type="text" id="whattheydid" name="whattheydid" size="32"/><br/>
+			<label for="fangspotted">你看见我的狗了吗？</label>
+			是<input id="fangspotted" name="fangspotted" type="radio" value="yes"/>
+			否<input id="fangspotted" name="fangspotted" type="radio" value="no"/><br/>
+			<img src="fang.jpg" width="100" height="175" alt="我可爱的狗狗fang"><br/>
+			<label for="other">其他：</label>
+			<textarea id="other" name="other" size="32"></textarea><br/>
+			<input type="submit" value="提交报告" name="submit"/>
+		</form>
+	</body>
+</html>
