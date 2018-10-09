@@ -8,13 +8,12 @@
 		
 	<?php
 		$name=$_POST['name'];
-		$when_it_happend=$_POST['whenithappened'];
+		$when_it_happened=$_POST['whenithappened'];
 		$how_long=$_POST['howlong'];
 		$alien_description=$_POST['aliendescription'];
 		$fang_spotted=$_POST['fangspotted'];
 		$email=$_POST['email'];
 		$what_they_did=$_POST['whattheydid'];
-		$fang_spotted=$_POST['fangspotted'];
 		$other=$_POST['other'];
 		
 		$to='snsart@163.com';
@@ -26,10 +25,17 @@
 			"看见fang了吗：$fang_spotted\n".
 			"其他要补充的：$other";
 			
-		mail($to,$subject,$msg,'From:'.$email);
+		/*mail($to,$subject,$msg,'From:'.$email);*/
+		
+		$dbc=mysqli_connect('www.hfPHP.com','root','root','aliendatabase')or die('Errot connecting to MYSQL server.');
+		$query="INSERT INTO aliens_abduction(name,when_it_happened,how_long,alien_description,fang_spotted,email,what_they_did,other)".
+		"VALUES('$name','$when_it_happened','$how_long','$alien_description','$fang_spotted','$email','$what_they_did','$other')";
+		$result=mysqli_query($dbc,$query)or die('Error querying database.');
+		mysqli_close($dbc);
+		
 		
 		echo '感谢你提交这个表单.<br/>';
-		echo '你被劫持在'.$when_it_happend.'<br/>';
+		echo '你被劫持在'.$when_it_happened.'<br/>';
 		/*echo '测试'.$how_longss;*/
 	?>
 	</body>
