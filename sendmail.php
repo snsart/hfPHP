@@ -43,19 +43,6 @@
 		
 		if($output_form){
 	?>
-	
-<<<<<<< HEAD
-	$dbc=mysqli_connect('www.hfPHP.com','root','root','elvis_store') or die('数据库链接失败');
-	$query="select * from email_list";
-	$result=mysqli_query($dbc,$query) or die('数据获取失败');
-	while($row=mysqli_fetch_array($result)){
-		echo $row['name'].':'.$row['email'].'<br/>';
-	};
-	mysqli_close($dbc);
-	/*
-	  这本书首先引入了一个模型——德雷福斯模型，介绍了从小工到专家的五个阶段：新手，超级新手、胜任者、精通和专家，
-	*/
-=======
 		<form method="post" action=<?php echo $_SERVER['PHP_SELF']; ?>
 			<label for="subject">主题</label><br/>
 			<input type="text" id="subject" name="subject" size='60' value="<?php echo $subject; ?>"/><br/>
@@ -65,8 +52,7 @@
 		</form>
 		
 	<?php
-		}
->>>>>>> e57b37097e24b2a7689aad0497e003c762717441
+	}
 	?>
 </body>
 </html>
