@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>最高得分</title>
+		<link rel="stylesheet" href="style.css" type="text/css"/>
 	</head>
 	<body>
 		<h2>Guitar-wars-High Scores</h2>
@@ -13,11 +14,17 @@
 			require_once('appvars.php');
 			require_once('connectvars.php');
 			$dbc=mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
-			$query="select * from guitarwars";
+			
+			$query="select * from guitarwars order by score DESC,DATE ASC";
 			$data=mysqli_query($dbc,$query);
 			
 			echo '<table>';
+			$i=0;
 			while($row=mysqli_fetch_array($data)){
+				if($i==0){
+					echo '<tr><td colspan="2" class="topscoreheader">TOP SCORE:'.$row['score'].'</td></tr>';
+				}
+				
 				echo '<tr><td class="scoreinfo">';
 				echo '<span class="score">'. $row["score"].' </span><br/>';
 				echo '<strong>name:</strong>'.$row["name"].'<br/>';
@@ -27,6 +34,7 @@
 				}else{
 					echo '<td><img src="unverified.gif" alt="unverified score"/></td></tr>';
 				}
+				$i++;
 			}
 			echo '</table>';
 			mysqli_close($dbc);
