@@ -47,7 +47,7 @@
 				echo '<input type="radio" name="confirm" value="no" checked="checked" />No<br/>';
 				echo '<input type="submit" value="Submit" name="submit" />';
 				echo '<input type="hidden" name="id" value="'.$id.'"/>';
-				echo '<input type="hidden" name="name" value="'.$name.'"/>';
+				echo '<input type="h                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 idden" name="name" value="'.$name.'"/>';
 				echo '<input type="hidden" name="score" value="'.$score.'"/>';
 				echo '</form>';
 			}
