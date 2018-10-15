@@ -28,7 +28,7 @@
 							echo $target;
 							if(move_uploaded_file($_FILES['screenshot']['tmp_name'],$target)){
 								$dbc=mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
-								$query="insert into guitarwars values(0,now(),'$name','$score','$screenshot')";
+								$query="insert into guitarwars (date,name,score,screenshot) values (now(),'$name','$score','$screenshot')";
 								mysqli_query($dbc,$query);
 								
 								echo '<p>感谢你提供你的得分</p>';
