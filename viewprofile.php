@@ -1,5 +1,10 @@
 <?php
-	require_once('login.php');
+	if(!isset($_COOKIE['username'])){
+		require_once('login.php');
+		exit();
+	}else{
+		$user_username=$_COOKIE['username'];
+	}
 ?>
 <!DOCTYPE html>
 <html>

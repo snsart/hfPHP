@@ -1,28 +1,61 @@
 <?php
 require_once('connectvars.php');
-if(!isset($_SERVER['PHP_AUTH_USER'])||!isset($_SERVER['PHP_AUTH_PW'])){
-	header('HTTP/1.1401 Unauthorized');
-	header('WWW-Authenticate:Basic realm="Mismatch"');
-	exit('<h3>Mismatch</h3>sorry,you must enter your username and password,if you aren\'t a registered member,please <a href="signup.php">sign up</a>');
+$error_msg="";
+if(!isset($_COOKIE['user_id'])){
+	if(isset($_POST['submit'])){
+		$dbc=mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME) or die("数据库链接失败");
+		$user_username=mysqli_real_escape_string($dbc,trim($_POST['username']));
+		$user_password=mysqli_real_escape_string($dbc,trim($_POST['password']));
+		if(!empty($user_username)&&!empty($user_password)){
+			$query="select user_id,username from mismatch_user where username='$user_username' and password=SHA('$user_password')";
+			$data=mysqli_query($dbc,$query);
+			
+			if(mysqli_num_rows($data)==1){
+				$row=mysqli_fetch_array($data);
+				setcookie('user_id',$row['user_id']);
+				setcookie('username',$row['username']);
+				$home_url='http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']).'/index.php';
+				header('Location:'.$home_url);
+			}else{
+				$error_msg="sorry,you must enter a valid username and password to log in";
+			}
+		}else{
+			$error_msg="sorry,you must enter your username and password to log in";
+		}
+	}
 }
-
-$dbc=mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME) or die("数据库链接失败");
-$user_username=mysqli_real_escape_string($dbc,trim($_SERVER['PHP_AUTH_USER']));
-$user_password=mysqli_real_escape_string($dbc,trim($_SERVER['PHP_AUTH_PW']));
-
-$query="select user_id,username from mismatch_user where username='$user_username' and password=SHA('$user_password')";
-$data=mysqli_query($dbc,$query);
-
-
-if(mysqli_num_rows($data)==1){
-	$row=mysqli_fetch_array($data);
-	$user_id=$row['user_id'];
-	$username=$row['username'];
-}else{
-	header('HTTP/1.1401 Unauthorized');
-	header('WWW-Authenticate:Basic realm="Mismatch"');
-	exit('<h3>Mismatch</h3>sorry,you must enter your username and password,if you aren\'t a registered member,please <a href="signup.php">sign up</a>');
-}
-echo('<p class="login">you are logged in as '.$username.'</p>');
-
 ?>
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>mismatch-log in</title>
+		<link rel="stylesheet" href="style.css" type="text/css"/>
+	</head>
+	<body>
+		<h2>Mismatch-log in</h2>
+		<?php
+			if(empty($_COOKIE['user_id'])){
+				echo '<p class="error">'.$error_msg.'</p>';	
+		?>	
+		
+		<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+			<fieldset>
+				<legend>登录</legend>
+				<label for="username">用户名：</label>
+				<input type="text" id="username" name="username" value="<?php if(!empty($username)) echo $username; ?>"/><br/>
+				<label for="password">密码：</label>
+				<input type="password" id="password" name="password"/><br/>
+			</fieldset>
+			<input type="submit" value="登录" name="submit" />
+		</form>
+		
+		<?php
+		}else{
+			echo '<p class="login">你已经登录：'.$_COOKIE['username'].'.</p>';
+		}
+		?>
+		
+	</body>
+</html>
