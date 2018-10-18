@@ -1,5 +1,5 @@
 <?php
-require_once('startsession.php');
+session_start();
 require_once('connectvars.php');
 $error_msg="";
 if(!isset($_SESSION['user_id'])){
@@ -15,8 +15,6 @@ if(!isset($_SESSION['user_id'])){
 				$row=mysqli_fetch_array($data);
 				$_SESSION['user_id']=$row['user_id'];
 				$_SESSION['username']=$row['username'];
-				setcookie('user_id',$row['user_id'],time()+60*60*24*30);
-				setcookie('username',$row['username'],time()+60*60*24*30);
 				$home_url='http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']).'/index.php';
 				header('Location:'.$home_url);
 			}else{
