@@ -29,6 +29,7 @@
 		
 		$query="select user_id from mismatch_user where user_id!='".$_SESSION['user_id']."'";
 		$data=mysqli_query($dbc,$query);
+		
 		while($row=mysqli_fetch_array($data)){
 			$query2="select response_id,topic_id,response from mismatch_response where user_id='".$row['user_id']."'";
 			$data2=mysqli_query($dbc,$query2);
@@ -39,11 +40,13 @@
 			
 			$score=0;
 			$topics=array();
-			
-			for($i=0;$i<count($user_response);$i++){
-				if((int)$user_response[$i]['response']+(int)$mismatch_responses[$i]['response']==3){
-					$score++;
-					array_push($topics,$user_response[$i]['topic_name']);
+			if(count($mismatch_responses)>0){
+				for($i=0;$i<count($user_response);$i++){
+					
+					if((int)$user_response[$i]['response']+(int)$mismatch_responses[$i]['response']==3){
+						$score++;
+						array_push($topics,$user_response[$i]['topic_name']);
+					}
 				}
 			}
 			
